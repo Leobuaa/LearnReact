@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>React-Event-Listener</title>
+    <script src="../build/react.js"></script>
+    <script src="../build/react-dom.js"></script>
+    <script src="../build/browser.min.js"></script>
+</head>
+<body>
+    <div id="container">
+
+    </div>
+    <script type="text/babel">
+        var TestClickComponent = React.createClass({
+            handleClick: function (event) {
+                if (this.refs.tip != null) {
+                    var tipE = ReactDOM.findDOMNode(this.refs.tip);
+                    if (tipE.style.display === 'none') {
+                        tipE.style.display = 'inline';
+                    } else {
+                        tipE.style.display = 'none';
+                    }
+                }
+                event.stopPropagation();
+                event.preventDefault();
+            },
+
+
+            render: function () {
+               return (
+                        <div>
+                            <button onClick={this.handleClick}>show|hide</button>
+                            <span ref="tip">Test Click</span>
+                        </div>
+               );
+           }
+        });
+
+        var TestInputComponent = React.createClass({
+            getInitialState: function () {
+               return {
+                   inputContent: ''
+               };
+            },
+
+            changeHandler: function (event) {
+                this.setState({
+                    inputContent: event.target.value
+                });
+            },
+
+            render: function () {
+                return (
+                        <div>
+                            <input type="text" onChange={this.changeHandler}/><span>{this.state.inputContent}</span>
+                        </div>
+                );
+            }
+        });
+
+        ReactDOM.render(
+                <div>
+                    <TestClickComponent/>
+                    <TestInputComponent/>
+                </div>,
+                document.getElementById('container'));
+    </script>
+</body>
+</html>
